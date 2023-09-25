@@ -55,6 +55,10 @@ jobs:
     # Type of runner to use for this job
     runs-on: ubuntu-latest
 
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
     # Steps to execute for the 'build' job
     steps:
       # Checks out the code so the runner can access it
