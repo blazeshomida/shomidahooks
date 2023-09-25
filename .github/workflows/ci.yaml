@@ -1,0 +1,83 @@
+# This GitHub Actions workflow is for Continuous Integration (CI)
+name: CI
+
+# Events that trigger this workflow: manual dispatch, workflow calls, and pull requests to "main"
+on:
+  workflow_dispatch: # Allows for manual triggers from the Actions tab
+  workflow_call: # Allows this workflow to be used in other workflows
+  pull_request: # Triggers this workflow on pull request events
+    branches: ["main"] # Filters to only PRs targeting the "main" branch
+
+# The jobs to be executed by this workflow
+jobs:
+  # Matrix job to handle tasks that can run in parallel ('lint' and 'test')
+  tasks:
+    # Strategy for running the tasks
+    strategy:
+      matrix:
+        task: ["lint"] # List of tasks to run in parallel
+
+    # Type of runner to use for this job
+    runs-on: ubuntu-latest
+
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+    # Steps to execute for the 'tasks' job
+    steps:
+      # Checks out the code so the runner can access it
+      - uses: actions/checkout@v3
+
+      # Sets up pnpm (version 7)
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+
+      # Sets up Node.js (version 18.x) and caches dependencies
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: "pnpm"
+
+      # Installs project dependencies
+      - run: pnpm install
+
+      # Executes the task specified in the matrix (either 'lint' or 'test')
+      - name: Run task
+        run: pnpm run ${{ matrix.task }}
+
+  # The 'build' job, which depends on the 'tasks' job
+  build:
+    # Specifies that the 'build' job will only run after the 'tasks' job completes successfully
+    needs: tasks
+
+    # Type of runner to use for this job
+    runs-on: ubuntu-latest
+
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+    # Steps to execute for the 'build' job
+    steps:
+      # Checks out the code so the runner can access it
+      - uses: actions/checkout@v3
+
+      # Sets up pnpm (version 7)
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+
+      # Sets up Node.js (version 18.x) and caches dependencies
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: "pnpm"
+
+      # Installs project dependencies
+      - run: pnpm install
+
+      # Builds the project
+      - name: Build Project
+        run: pnpm run build

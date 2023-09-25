@@ -1,0 +1,49 @@
+# This is a GitHub Actions workflow for automatically creating Pull Requests
+name: Auto PR
+
+# Defines the events that will trigger this workflow
+on:
+  # Allows the workflow to be manually triggered from the GitHub Actions tab
+  workflow_dispatch:
+
+  # Triggers the workflow on push events for all branches except "main"
+  push:
+    branches-ignore: ["main"]
+
+# Describes the jobs that this workflow will execute
+jobs:
+  # The "auto-pr" job is responsible for automatically creating Pull Requests
+  auto-pr:
+    # Specifies that the job will run on the latest version of Ubuntu
+    runs-on: ubuntu-latest
+
+    # Defines the outputs that can be used by other jobs in this workflow
+    outputs:
+      pr_created: ${{ steps.create_pr.outputs.pr_created }}
+
+    # Lists the steps to execute during the "auto-pr" job
+    steps:
+      # Checks out the code into the runner's workspace
+      - uses: actions/checkout@v3
+
+      # Uses a third-party action to automatically create a Pull Request
+      # For details visit: https://github.com/marketplace/actions/auto-pull-request
+      # The step ID "create_pr" is used to capture the output
+      - name: Create Pull Request
+        id: create_pr
+        uses: diillson/auto-pull-request@v1.0.1
+        with:
+          destination_branch: "main" # The branch into which the PR will be merged
+          pr_title: "🤖 AutoPR - ${{github.ref_name}}" # The title of the PR
+          pr_body: | # The body content of the PR
+            💎 Automatic PR generated for ${{github.ref_name}} to be merged into `main` branch
+          pr_label: "auto-pr" # The label to be added to the PR
+
+  # The "ci" job is dependent on the "auto-pr" job
+  ci:
+    # Specifies that this job needs the "auto-pr" job to complete first
+    needs: auto-pr
+    # Conditionally run this job only if a new PR was actually created by "auto-pr"
+    if: needs.auto-pr.outputs.pr_created == 'true'
+    # Specifies the path to the CI workflow that should be used
+    uses: ./.github/workflows/ci.yaml
