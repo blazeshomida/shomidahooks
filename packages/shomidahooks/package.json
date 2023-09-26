@@ -13,6 +13,7 @@
     "access": "public"
   },
   "scripts": {
+    "lint": "eslint . --fix",
     "build": "tsup",
     "dev": "tsup --watch"
   },
