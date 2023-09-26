@@ -14,8 +14,9 @@
   },
   "scripts": {
     "lint": "eslint . --fix",
-    "build": "tsup",
-    "dev": "tsup --watch"
+    "build": "pnpm run clean && tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf ./dist"
   },
   "keywords": [],
   "author": "Blaze S.",

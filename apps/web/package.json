@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "pnpm run clean && next build",
     "start": "next start",
-    "lint": "next lint --fix --cache && tsc"
+    "lint": "next lint --fix --cache && tsc",
+    "clean": "rm -rf .next "
   },
   "dependencies": {
     "@types/node": "20.6.5",
