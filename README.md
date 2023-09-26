@@ -28,7 +28,7 @@ For more examples on monorepos check out the [official Turborepo examples](https
 
 ## Demo
 
-https://solutions-monorepo.vercel.sh
+[Here!](https://solutions-monorepo.vercel.sh)
 
 ## How to Use
 
