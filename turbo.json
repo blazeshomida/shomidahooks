@@ -10,6 +10,7 @@
       "outputs": []
     },
     "lint": {
+      "dependsOn": ["shomidahooks#build"],
       "outputs": []
     },
     "dev": {
