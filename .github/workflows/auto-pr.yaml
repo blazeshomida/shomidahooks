@@ -37,7 +37,7 @@ jobs:
           pr_title: "🤖 AutoPR - ${{github.ref_name}}" # The title of the PR
           pr_body: | # The body content of the PR
             💎 Automatic PR generated for ${{github.ref_name}} to be merged into `main` branch
-          pr_label: "auto-pr" # The label to be added to the PR
+          pr_label: "🤖 Auto PR" # The label to be added to the PR
 
   # The "ci" job is dependent on the "auto-pr" job
   ci:
