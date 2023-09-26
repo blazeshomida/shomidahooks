@@ -1,0 +1,50 @@
+name: "Run Prettier Weekly"
+
+on:
+  # Allows the workflow to be manually triggered from the GitHub Actions tab
+  workflow_dispatch:
+
+  schedule:
+    # Run every Sunday at midnight UTC
+    - cron: "0 0 * * 0"
+
+jobs:
+  prettier-job:
+    name: "Run Prettier"
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks out the code so the runner can access it
+      - uses: actions/checkout@v3
+
+      # Sets up pnpm (version 7)
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+
+      # Sets up Node.js (version 18.x) and caches dependencies
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: "pnpm"
+
+      # Installs project dependencies
+      - run: pnpm install --no-frozen-lockfile
+
+      # Run Prettier
+      - name: Run Prettier
+        run: pnpm run prettier
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 🤖🧹 Auto Prettier
+          title: 🤖🧹 Auto Prettier
+          body: |
+            Formatted code using prettier
+          branch: auto-prettier
+          branch-suffix: timestamp
+          labels: |
+            🤖 Auto PR
+            🤖🧹 Auto Prettier
