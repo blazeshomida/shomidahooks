@@ -1,9 +1,15 @@
 {
-  "extends": "tsconfig/nextjs.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "./base.json",
+
   "compilerOptions": {
     "plugins": [{ "name": "next" }],
-    "allowJs": true
+    "jsx": "preserve",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
+
   "exclude": ["node_modules"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"]
 }
