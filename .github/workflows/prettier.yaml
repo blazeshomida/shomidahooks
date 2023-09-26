@@ -35,10 +35,16 @@ jobs:
       - name: Run Prettier
         run: pnpm run prettier
 
-      # Commit and push changes back to repository (only if there are changes)
-      - name: Commit and push if changed
-        run: |
-          git config --global user.name 'GitHub Action'
-          git config --global user.email 'githubaction@example.com'
-          git add -A
-          git diff --quiet && git diff --staged --quiet || (git commit -m '🤖🧹Automated Prettier fixes' && git push)
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 🤖🧹 Auto Prettier
+          title: 🤖🧹 Auto Prettier
+          body: |
+            Formatted code using prettier
+          branch: auto-prettier
+          branch-suffix: timestamp
+          labels: |
+            🤖 Auto PR
+            🤖🧹 Auto Prettier
