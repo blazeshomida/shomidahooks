@@ -41,7 +41,7 @@ jobs:
           cache: "pnpm"
 
       # Installs project dependencies
-      - run: pnpm install
+      - run: pnpm install --no-frozen-lockfile
 
       # Executes the task specified in the matrix (either 'lint' or 'test')
       - name: Run task
@@ -76,7 +76,7 @@ jobs:
           cache: "pnpm"
 
       # Installs project dependencies
-      - run: pnpm install
+      - run: pnpm install --no-frozen-lockfile
 
       # Builds the project
       - name: Build Project
