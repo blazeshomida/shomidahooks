@@ -10,16 +10,20 @@
       "outputs": []
     },
     "lint": {
+      "dependsOn": ["shomidahooks#build"],
       "outputs": []
     },
     "dev": {
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "start": {
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "clean": {
-      "cache": false
+      "cache": false,
+      "persistent": false
     }
   }
 }
