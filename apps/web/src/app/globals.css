@@ -2,26 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --bg-base: 0, 0%, 99%;
+    --text-base: 0, 0%, 4%;
+    --bg-primary: 0, 100%, 56%;
+    --text-primary: 0, 0%, 90%;
+    --bg-secondary: 0, 0%, 89%;
+    --text-secondary: 0, 0%, 4%;
+    --bg-muted: 0, 0%, 20%;
+    --text-muted: 0, 0%, 70%;
+    --bg-accent: 0, 0%, 49%;
+    --text-accent: 0, 0%, 90%;
+    --bg-destructive: 0, 85%, 60%;
+    --text-destructive: 0, 0%, 4%;
+    --border-base: 0, 0%, 20%;
   }
-}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  [data-theme="dark"] {
+    --bg-base: 0, 0%, 1%;
+    --text-base: 0, 0%, 96%;
+    --bg-primary: 0, 100%, 44%;
+    --text-primary: 0, 0%, 10%;
+    --bg-secondary: 0, 0%, 11%;
+    --text-secondary: 0, 0%, 96%;
+    --bg-muted: 0, 0%, 80%;
+    --text-muted: 0, 0%, 96%;
+    --bg-accent: 0, 0%, 51%;
+    --text-accent: 0, 0%, 96%;
+    --bg-destructive: 0, 62%, 30%;
+    --text-destructive: 0, 0%, 10%;
+    --border-base: 0, 0%, 60%;
+  }
 }
